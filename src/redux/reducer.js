@@ -35,5 +35,28 @@ function posts(state = Posts, action) {
       return state;
   }
 }
-const rootReducer = combineReducers({ posts, comments });
+const userRegister = (state = {}, action) => {
+  if (action.type === "HANDEL_REGISTER") {
+    let user = action.user;
+    return user;
+  } else {
+    return state;
+  }
+};
+
+export const userLogin = (state = {}, action) => {
+  if (action.type === "USER_ONLOGIN") {
+    let user = action.user;
+    return { ...state, user };
+  } else {
+    return state;
+  }
+};
+
+const rootReducer = combineReducers({
+  posts,
+  comments,
+  userRegister,
+  userLogin
+});
 export default rootReducer;

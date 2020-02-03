@@ -19,7 +19,7 @@ class Photo extends Component {
           <button
             onClick={() => {
               this.props.startRemovingPost(this.props.index, post.id);
-              this.props.history.push("/");
+              this.props.history.push("/PhotoWall");
             }}
           >
             {" "}

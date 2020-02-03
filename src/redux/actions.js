@@ -1,10 +1,54 @@
 import { database } from "../data/Config";
 
-//Adding posts from database to posts.js
-export function startAddingPost(post) {
+//START ADDING Register
+
+export const Login = userLogin => {
   return dispatch => {
     return database
-      .ref("posts")
+      .ref()
+      .child("users")
+      .on("value", snapshot => {
+        snapshot.forEach(el => {
+          if (
+            el.val().username === userLogin.username &&
+            el.val().password === userLogin.password
+          ) {
+            localStorage.setItem("key", el.key);
+            localStorage.setItem("username", el.val().username);
+            dispatch(checkUser(userLogin));
+          } else {
+            console.log("error");
+          }
+        });
+      });
+  };
+};
+
+//START ADDING Register
+export const addUser = user => {
+  return dispatch => {
+    return database
+      .ref()
+
+      .child("users")
+      .push({ ...user, posts: null, comments: null })
+      .then(() => {
+        dispatch(handelRegister(user));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+};
+//Adding posts from database to posts.js
+export function startAddingPost(post) {
+  const id = localStorage.getItem("key");
+  return dispatch => {
+    return database
+      .ref()
+      .child("users")
+      .child(id)
+      .child("posts")
       .update({ [post.id]: post })
       .then(() => {
         dispatch(addPost(post));
@@ -17,8 +61,9 @@ export function startAddingPost(post) {
 //loading post from database
 export function startLoadingPost() {
   return dispatch => {
+    const id = localStorage.getItem("key");
     return database
-      .ref("posts")
+      .ref("/users/" + id + "/posts")
       .once("value")
       .then(snapshot => {
         let posts = [];
@@ -34,9 +79,10 @@ export function startLoadingPost() {
 }
 //remove post from database
 export function startRemovingPost(index, id) {
+  const id1 = localStorage.getItem("key");
   return dispatch => {
     return database
-      .ref(`posts/${id}`)
+      .ref(`users/${id1}/posts/${id}`)
       .remove()
       .then(() => {
         dispatch(removePhoto(index));
@@ -48,9 +94,10 @@ export function startRemovingPost(index, id) {
 }
 //adding comments to database
 export function startAddingComment(comment, postId) {
+  const id = localStorage.getItem("key");
   return dispatch => {
     return database
-      .ref("comments/" + postId)
+      .ref("users/" + id + "/comments/" + postId)
       .push(comment)
       .then(() => {
         dispatch(addComment(comment, postId));
@@ -62,9 +109,10 @@ export function startAddingComment(comment, postId) {
 }
 //loading comments from database
 export function startLoadingComments() {
+  const id = localStorage.getItem("key");
   return dispatch => {
     return database
-      .ref("comments")
+      .ref("/users/" + id + "/comments")
       .once("value")
       .then(snapshot => {
         let comments = {};
@@ -112,3 +160,10 @@ export function loadComments(comments) {
     comments: comments
   };
 }
+export const handelRegister = user => {
+  return { type: "HANDEL_REGISTER", user: user };
+};
+
+export const checkUser = user => {
+  return { type: "USER_ONLOGIN", user };
+};

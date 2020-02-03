@@ -4,6 +4,8 @@ import PhotoWall from "./PhotoWall";
 import AddPhoto from "./AddPhoto";
 import { Route } from "react-router-dom";
 import Single from "./Single";
+import Login from "./Login";
+import Register from "./Register";
 
 class Main extends Component {
   constructor(props) {
@@ -20,9 +22,44 @@ class Main extends Component {
   render() {
     return (
       <div>
+        {localStorage.getItem("key") && (
+          <div className="logout">
+            <p>
+              Hello{" "}
+              <span style={{ fontWeight: "bold" }}>
+                {localStorage.getItem("username")}
+              </span>{" "}
+              ! Welcome to your PhotoWall ...
+            </p>
+            <button
+              className="btn-logout"
+              onClick={() => {
+                localStorage.clear();
+                this.props.history.push("/");
+              }}
+            >
+              Logout
+            </button>
+          </div>
+        )}
         <Route
           exact
           path="/"
+          render={history => {
+            return <Login onHistory={history} {...this.props} />;
+          }}
+        />
+
+        <Route
+          exact
+          path="/Register"
+          render={({ history }) => (
+            <Register onHistory={history} {...this.props} />
+          )}
+        />
+        <Route
+          exact
+          path="/PhotoWall"
           render={() => (
             <div className="div-container">
               <Title title={"PhotoWall"} />

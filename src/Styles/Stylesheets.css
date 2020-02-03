@@ -16,6 +16,20 @@ html {
   box-shadow: 10px 10px 15px 15px rgba(11, 11, 15, 0.2);
   border-radius: 1rem;
 }
+.logout {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  margin: 0px;
+  width: 97.6%;
+  padding: 10px 20px;
+}
+.btn-logout {
+  display: block;
+  max-width: 90px;
+  color: white;
+  background-color: #1f6ec9;
+}
 p {
   font-size: 1.6rem;
   line-height: 1.5;
@@ -25,6 +39,16 @@ h1 {
   text-align: center;
   font-weight: 100;
   font-size: 13rem;
+  margin: 2rem 0;
+  letter-spacing: -1px;
+  color: black;
+  text-decoration: none;
+}
+h5 {
+  font-family: billabong, "billabongregular";
+  text-align: center;
+  font-weight: 100;
+  font-size: 8rem;
   margin: 2rem 0;
   letter-spacing: -1px;
   color: black;

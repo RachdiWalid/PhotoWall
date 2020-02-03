@@ -7,8 +7,6 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./redux/reducer";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import { database } from "./data/Config";
-
 const store = createStore(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),

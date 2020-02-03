@@ -6,7 +6,7 @@ class Title extends Component {
   render() {
     return (
       <h1>
-        <Link to="/">{this.props.title}</Link>
+        <Link to="/PhotoWall">{this.props.title}</Link>
       </h1>
     );
   }

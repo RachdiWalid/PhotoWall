@@ -6,7 +6,9 @@ import { withRouter } from "react-router";
 function mapStateToProps(state) {
   return {
     posts: state.posts,
-    comments: state.comments
+    comments: state.comments,
+    user: state.userRegister,
+    users: state.userLogin
   };
 }
 function mapDispatchToProps(dispatch) {
